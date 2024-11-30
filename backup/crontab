@@ -1,0 +1,2 @@
+# Run backup every 6 hours
+0 */6 * * * /usr/local/bin/backup-etcd.sh >> /var/log/etcd-backup.log 2>&1
