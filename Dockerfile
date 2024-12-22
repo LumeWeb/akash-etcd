@@ -1,4 +1,5 @@
 ARG ETCD_VERSION=3.5
+ARG SUPERCRONIC_VERSION=0.2.33
 
 FROM docker.io/bitnami/etcd:${ETCD_VERSION}
 
@@ -9,15 +10,15 @@ USER root
 RUN apt-get update && apt-get install -y \
     wget \
     ca-certificates \
-    cronie \
     && rm -rf /var/lib/apt/lists/*
 
 # Install minio client
 RUN wget https://dl.min.io/client/mc/release/linux-amd64/mc -O /usr/local/bin/mc && \
     chmod +x /usr/local/bin/mc
 
-# Create backup directory
-RUN mkdir -p /backup
+# Install supercronic
+RUN wget https://github.com/aptible/supercronic/releases/download/v${SUPERCRONIC_VERSION}/supercronic-linux-amd64 -O /usr/local/bin/supercronic && \
+    chmod +x /usr/local/bin/supercronic
 
 VOLUME ["/bitnami/etcd"]
 
@@ -32,4 +33,3 @@ RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 # Use our custom entrypoint
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 CMD ["/opt/bitnami/scripts/etcd/run.sh"]
-
