@@ -16,5 +16,9 @@ fi
 
 export ETCD_ADVERTISE_CLIENT_URLS="http://${AKASH_INGRESS_HOST}:${AKASH_EXTERNAL_PORT_2379}"
 
+source /opt/bitnami/scripts/etcd-env.sh
+
+chown -R $ETCD_DAEMON_USER $ETCD_VOLUME_DIR
+
 # Call the original entrypoint with all arguments
 exec /opt/bitnami/scripts/etcd/entrypoint.sh "$@"
