@@ -9,10 +9,12 @@ chown -R 1001:1001 /bitnami/etcd
 # Initialize backup system if enabled and environment variables are set
 BACKUP_ENABLED=${BACKUP_ENABLED:-true}
 if [ "$BACKUP_ENABLED" = "true" ] && [ ! -z "$S3_ENDPOINT" ] && [ ! -z "$S3_ACCESS_KEY" ] && [ ! -z "$S3_SECRET_KEY" ] && [ ! -z "$S3_BUCKET" ]; then
-    /usr/local/bin/init-backup.sh
+  /usr/local/bin/init-backup.sh
 else
-    echo "Backup system not enabled or missing required S3 environment variables"
+  echo "Backup system not enabled or missing required S3 environment variables"
 fi
+
+export ETCD_ADVERTISE_CLIENT_URLS="http://${AKASH_INGRESS_HOST}:${AKASH_EXTERNAL_PORT_2379}"
 
 # Call the original entrypoint with all arguments
 exec /opt/bitnami/scripts/etcd/entrypoint.sh "$@"
