@@ -16,7 +16,14 @@ fi
 
 export ETCD_ADVERTISE_CLIENT_URLS="http://${AKASH_INGRESS_HOST}:${AKASH_EXTERNAL_PORT_2379}"
 
-source /opt/bitnami/scripts/etcd-env.sh
+# Load libraries
+. /opt/bitnami/scripts/libos.sh
+. /opt/bitnami/scripts/libetcd.sh
+
+# Load etcd environment settings
+. /opt/bitnami/scripts/etcd-env.sh
+
+am_i_root && ensure_user_exists "$ETCD_DAEMON_USER" --group "$ETCD_DAEMON_GROUP"
 
 chown -R $ETCD_DAEMON_USER $ETCD_VOLUME_DIR
 
