@@ -1,7 +1,8 @@
 ARG ETCD_VERSION=3.5
-ARG SUPERCRONIC_VERSION=0.2.33
 
 FROM docker.io/bitnami/etcd:${ETCD_VERSION}
+
+ARG SUPERCRONIC_VERSION=0.2.33
 
 # Switch to root user
 USER root
