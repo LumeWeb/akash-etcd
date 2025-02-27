@@ -1,6 +1,12 @@
 #!/bin/bash
 set -e
 
+if -f /akash-cfg/etcd.env; then
+  set -a
+  source /akash-cfg/config.env
+  set +a
+fi
+
 # Ensure the data directory exists with correct permissions
 mkdir -p /bitnami/etcd/data
 chmod 700 -R /bitnami/etcd
